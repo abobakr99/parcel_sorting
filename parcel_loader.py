@@ -29,42 +29,42 @@ def setup_test_001():
     points = ((11,20,20),)
     setup_file(points)
     yield points
-    os.remove("input_file.txt")
+    os.remove(fpath)
 
 @pytest.fixture
 def setup_test_003():
     points = ()
     setup_file(points)
     yield points
-    os.remove("input_file.txt")
+    os.remove(fpath)
 
 @pytest.fixture
 def setup_test_004():
     points = ()
     setup_file(points)
     yield points
-    os.remove("input_file.txt")
+    os.remove(fpath)
 
 @pytest.fixture
 def setup_test_005():
     points = ((11,20,20),(20,10,10))
     setup_file(points)
     yield points
-    os.remove("input_file.txt")
+    os.remove(fpath)
 
 @pytest.fixture
 def setup_test_006():
     points = ((60,20,20),(40,10,10))
     setup_file(points)
     yield points
-    os.remove("input_file.txt")
+    os.remove(fpath)
 
 @pytest.fixture
 def setup_test_007():
     points = ((50, 10, 10), (40, 17, 19), (50,20,20))
     setup_file(points)
     yield points
-    os.remove("input_file.txt")
+    os.remove(fpath)
     
 def test_001_load_time(setup_test_001):
     points = setup_test_001
