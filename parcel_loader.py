@@ -18,7 +18,6 @@ def setup_file(points):
 def find_match(regxs):
     output = subprocess.check_output('./parcel_loader_v1 -f ./'+fpath, stderr=subprocess.STDOUT, shell=True).decode()
     match = re.findall(regxs, output, re.MULTILINE)  
-    print(match)
     if not match:
         pytest.fail('Failed to parse the desire match from output: {}'.format(output))
     return  (match[0])
@@ -71,7 +70,6 @@ def test_001_load_time(setup_test_001):
     print('Testing points: {}'.format(points))
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs))
-    print (min_time)
     print ('Actual result = {}\n'
            'Expected result = {}'.format(min_time, 30.00))
     assert min_time == 30.00, 'Minimum time should be 30 for point: {}'.format(points)
@@ -81,16 +79,17 @@ def test_003_load_time(setup_test_003):
     start_point = find_match(regxs)
     print ('Actual result = {}\n'
            'Expected result = {}'.format(start_point, (0,0)))
-    assert start_point == ('0','0'), 'start point should be 0,0 for point: {}'.format(start_point)
+    assert start_point == ('0','0'), 'start point should be (0,0)' 
     
 def test_004_load_time(setup_test_004):
     regxs = r'Stopping\sat\spoint\:\s\w\=(\d\d)\,\w\=(\d\d)'
     stop_point = find_match(regxs)
     print ('Actual result = {}\n'
            'Expected result = {}'.format(stop_point, (20,20)))
-    assert stop_point == ('20','20'), 'Stop point should be at 20,20 for point: {}'.format(stop_point)
+    assert stop_point == ('20','20'), 'Stop point should be at (20,20)'
     
-def test_005_load_time(setup_test_005):   
+def test_005_load_time(setup_test_005):
+    points = setup_test_005
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs))
     print ('Actual result = {}\n'
@@ -98,6 +97,7 @@ def test_005_load_time(setup_test_005):
     assert min_time == 41.00, 'Minimum time should be 41 for point: {}'.format(points)
     
 def test_006_load_time(setup_test_006):
+    points = setup_test_006
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs))
     print ('Actual result = {}\n'
@@ -105,6 +105,7 @@ def test_006_load_time(setup_test_006):
     assert min_time == 60.00, 'Minimum time should be 41 for point: {}'.format(points)
     
 def test_007_load_time(setup_test_007):
+    points = setup_test_007
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs))
     print ('Actual result = {}\n'
