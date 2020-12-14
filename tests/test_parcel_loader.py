@@ -153,5 +153,5 @@ def test_013_point_foramt(setup_test_013):
 
     assert  collections.Counter(match) == collections.Counter(points), 'The point format should be 3 comma seprated values'
 
-def test_014_process_with_no_file():
+def test_process_with_no_file():
     pass
