@@ -150,4 +150,6 @@ def setup_test_013():
     os.remove(fpath)
 
 def test_013_process_with_no_file():
-    pass
+    return_code = subprocess.call(['../bins/parcel_loader_v1' ], stderr=subprocess.STDOUT)
+    print(' code ==== {} ==='.format(return_code))
+    assert  return_code != 0
