@@ -22,24 +22,6 @@ def invalid_points_file_setup(points):
 
     with open(fpath, 'w') as file:
         file.write(points)
-    
-def read_from_file():
-    file1 = open(fpath, 'r') 
-    Lines = file1.readlines()
-    for line in Lines:
-        if line.isspace():
-            Lines.remove(line)
-        
-    num_points = int (Lines[0].strip())
-
-    points = []
-    for point in Lines[1:]:
-        points.append(point.rstrip())
-
-    file_content = []
-    file_content.append(num_points)
-    file_content.append(points)
-    return file_content
 
 def call_process():
     out = subprocess.check_output('../bins/parcel_loader_v1 -f ./{}'.format(fpath), stderr=subprocess.STDOUT, shell=True).decode()
