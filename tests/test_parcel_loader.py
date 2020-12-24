@@ -16,11 +16,22 @@ def setup_file(points):
     return fpath
 
 def invalid_points_file_setup(points):
+    fpath = 'input_file.txt'
     if not isinstance(points,str):
        points = str(points)
 
     with open(fpath, 'w') as file:
         file.write(points)
+    return fpath
+
+def read_file(fpath):
+    file = open(fpath, 'r')
+    Lines = file.readlines()
+    for line in Lines:
+        if line.isspace():
+            Lines.remove(line)
+    points = Lines[1:]
+    return points
 
 def call_process(fpath):
     out = subprocess.check_output('../bins/parcel_loader_v1 -f ./'+fpath, stderr=subprocess.STDOUT, shell=True).decode()
@@ -175,6 +186,7 @@ def setup_test_008():
 
 def test_008_load_time(setup_test_008):
     fpath = setup_test_008
+    points = read_file(fpath)
     regex = r'^Minimum time = (\d+\.\d\d)'
     print('Testing points: {}'.format(points))
     out = call_process(fpath)
@@ -187,13 +199,16 @@ def test_008_load_time(setup_test_008):
 def setup_test_009(request):
     points = request.param
     fpath = setup_file(points)
-    yield fpath
+    yield [points, fpath ]
     os.remove(fpath)
 
 def test_009_load_time_format(setup_test_009):
-    fpath = setup_test_009
+    setup = setup_test_009
+    fpath = setup[1]
+    points = setup[0]
+    #points = read_file(fpath)
     regex = r'^Minimum time = \d+\.\d\d'
-    min_time =0
+    min_time = '0'
     if points == ((1,10,10),):
         min_time = '21.00'
     elif points == ((12,10,10),): 
@@ -239,15 +254,17 @@ def test_011_load_time_format(setup_test_011):
 @pytest.fixture(params = [ 15 , (12,10,), 'test' ])
 def setup_test_012(request):
     points = request.param
-    invalid_points_file_setup(points)
-    yield points
+    fpath = invalid_points_file_setup(points)
+    yield [points, fpath ]
     os.remove(fpath)
 
 def test_012_invalid_points(setup_test_012):
-    points = setup_test_012
+    setup = setup_test_012
+    points = setup[0]
+    fpath = setup[1]
     regex = r'^Minimum time = (\d+\.\d\d)'
     print('Testing points: {}'.format(points))
-    out = call_process()
+    out = call_process(fpath)
     match = find_match(regex,out)
     min_time = float (match)
     print ('Actual result = {}\n''Expected result ={}'.format(min_time, 20.00))
@@ -261,5 +278,4 @@ def setup_test_013():
 
 def test_013_process_with_no_file():
     return_code = subprocess.call(['../bins/parcel_loader_v1' ], stderr=subprocess.STDOUT)
-    print(' code ==== {} ==='.format(return_code))
     assert  return_code != 0
