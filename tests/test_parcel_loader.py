@@ -274,6 +274,6 @@ def test_012_invalid_points(setup_test_012):
     assert min_time == 20.00, 'Minimum time should be 20 for point: {}'.format(points)
 
 def test_013_process_with_no_file():
-    print('Testing the process with no input file')
+    print('Testing the process without input file')
     return_code = subprocess.call(['../bins/parcel_loader_v1' ], stderr=subprocess.STDOUT)
     assert  return_code != 0
