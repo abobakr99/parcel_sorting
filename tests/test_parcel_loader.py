@@ -25,12 +25,15 @@ def invalid_points_file_setup(points):
     return fpath
 
 def read_file(fpath):
-    file = open(fpath, 'r')
-    Lines = file.readlines()
+    Lines = ''
+    with open(fpath, 'r') as file:
+        Lines = file.readlines()
+        
     for line in Lines:
         if line.isspace():
             Lines.remove(line)
-    points = Lines[1:]
+    points = Lines[0]
+    
     return points
 
 def call_process(fpath):
@@ -195,24 +198,25 @@ def test_008_load_time(setup_test_008):
     print ('Actual result = {}\n''Expected result <={}'.format(min_time, 30.00))
     assert min_time <= 30.00, 'Minimum time should be 30 or less for point: {}'.format(points)
 
-@pytest.fixture(params = [((1,10,10),) , ((12,10,10),) ])
+@pytest.fixture(params = [{((1,10,10),): '21.00'} , {((12,10,10),): '30.00'} ])
 def setup_test_009(request):
-    points = request.param
+    params = request.param
+    points = list(params.keys())[0]
     fpath = setup_file(points)
-    yield [points, fpath ]
+    yield [params, fpath ]
     os.remove(fpath)
 
 def test_009_load_time_format(setup_test_009):
     setup = setup_test_009
     fpath = setup[1]
-    points = setup[0]
-    #points = read_file(fpath)
+    params = setup[0]
+    points = list(params.keys())[0] #Get input points 
     regex = r'^Minimum time = \d+\.\d\d'
     min_time = '0'
     if points == ((1,10,10),):
-        min_time = '21.00'
+        min_time = params[points]
     elif points == ((12,10,10),): 
-        min_time = '30.00'
+        min_time = params[points]
 
     out = call_process(fpath)
     min_time_string = find_match(regex,out)
@@ -255,13 +259,12 @@ def test_011_load_time_format(setup_test_011):
 def setup_test_012(request):
     points = request.param
     fpath = invalid_points_file_setup(points)
-    yield [points, fpath ]
+    yield fpath
     os.remove(fpath)
 
 def test_012_invalid_points(setup_test_012):
-    setup = setup_test_012
-    points = setup[0]
-    fpath = setup[1]
+    fpath = setup_test_012
+    points = read_file(fpath)
     regex = r'^Minimum time = (\d+\.\d\d)'
     print('Testing points: {}'.format(points))
     out = call_process(fpath)
@@ -269,13 +272,8 @@ def test_012_invalid_points(setup_test_012):
     min_time = float (match)
     print ('Actual result = {}\n''Expected result ={}'.format(min_time, 20.00))
     assert min_time == 20.00, 'Minimum time should be 20 for point: {}'.format(points)
-    
-@pytest.fixture()
-def setup_test_013():
-    fpath = setup_file(points)
-    yield fpath
-    os.remove(fpath)
 
 def test_013_process_with_no_file():
+    print('Testing the process with no input file')
     return_code = subprocess.call(['../bins/parcel_loader_v1' ], stderr=subprocess.STDOUT)
     assert  return_code != 0
