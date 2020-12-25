@@ -5,3 +5,5 @@ tests/assets/
 tests/__pycache__/
 tests/.pytest_cache/
 tests/pytest-html
+dummy.py/
+pytest_cache/
