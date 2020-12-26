@@ -21,6 +21,13 @@ pytest-html is a plugin for pytest that generates a HTML report for test results
 ```
 pip install pytest-html
 ``` 
+# Running The Tests 
+Navigate to the tests folder under the projects directory and run the following command
+
+```
+pytest test_parcel_loader.py --html=../results/report.html
+``` 
+
 
 
 
