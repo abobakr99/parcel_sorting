@@ -3,4 +3,4 @@ tests/assets/
 tests/__pycache__/
 tests/.pytest_cache/
 tests/pytest-html
-#results/*.html
+*.html
