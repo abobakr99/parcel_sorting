@@ -1,10 +1,10 @@
 # Parcel Sorting
-# Tech/Frameworks
+## Tech/Frameworks
 * Python
 * [Pytest](https://docs.pytest.org/en/stable/)
 
-# Installation
-### 1. Clone the repository to your machine
+## Installation
+Clone the repository to your machine
 
 SSH
 ```
@@ -14,14 +14,14 @@ HTTPS
 ```
 git clone https://github.com/AliBaWazir/parcel_sorting.git
 ``` 
-# Plugins
+## Plugins
 
 #### [Pytest-html](https://pytest-html.readthedocs.io/en/latest/) 
 pytest-html is a plugin for pytest that generates a HTML report for test results , install it using the following command
 ```
 pip install pytest-html
 ``` 
-# Running The Tests 
+## Running The Tests 
 Navigate to the tests folder under the project's directory and run the following command
 
 ```
