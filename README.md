@@ -19,7 +19,7 @@ git clone https://github.com/AliBaWazir/parcel_sorting.git
 #### [Pytest-html](https://pytest-html.readthedocs.io/en/latest/) 
 pytest-html is a plugin for pytest that generates a HTML report for test results , install it using the following command
 ```
-pip install pytest-html
+pip3 install pytest-html
 ``` 
 ## Running The Tests 
 Navigate to the tests folder under the project's directory and run the following command
