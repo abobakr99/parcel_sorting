@@ -16,7 +16,7 @@ def setup_file(points):
     return fpath
 
 def invalid_points_file_setup(points):
-    fpath = 'input_file.txt'
+    fpath = './input_file.txt'
     if not isinstance(points,str):
        points = str(points)
 
@@ -36,8 +36,8 @@ def read_file(fpath):
     
     return points
 
-def call_process(fpath):
-    out = subprocess.check_output('../bins/parcel_loader_v1 -f ./'+fpath, stderr=subprocess.STDOUT, shell=True).decode()
+def call_process(bin_test,fpath):
+    out = subprocess.check_output(bin_test+' -f '+fpath, stderr=subprocess.STDOUT, shell=True).decode()
     return out
 
 def find_match(regex,out):
@@ -53,12 +53,12 @@ def setup_test_001():
     yield fpath
     os.remove(fpath)
 
-def test_001_load_time(setup_test_001):
+def test_001_load_time(bin_path,setup_test_001):
+    bin_test = bin_path
     fpath = setup_test_001
-    points = open(fpath, "r")
-    points = points.read()
+    points = read_file(fpath)
     print('Testing points: {}'.format(points))
-    output = call_process(fpath)
+    output = call_process(bin_test,fpath)
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs,output))
     print ('Actual result = {}\n'
@@ -72,12 +72,12 @@ def setup_test_002():
     yield fpath
     os.remove(fpath)
 
-def test_002_load_time(setup_test_002):
+def test_002_load_time(bin_path,setup_test_002):
+    bin_test = bin_path
     fpath = setup_test_002
-    points = open(fpath, "r")
-    points = points.read()
+    points = read_file(fpath)
     print('Testing points: {}'.format(points))
-    output = call_process(fpath)
+    output = call_process(bin_test,fpath)
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs,output))
     print ('Actual result = {}\n'
@@ -91,12 +91,12 @@ def setup_test_003():
     yield fpath
     os.remove(fpath)    
 
-def test_003_start_point(setup_test_003):
+def test_003_start_point(bin_path,setup_test_003):
+    bin_test = bin_path
     fpath = setup_test_003
-    points = open(fpath, "r")
-    points = points.read()
+    points = read_file(fpath)
     print('Testing points: {}'.format(points))
-    output = call_process(fpath)
+    output = call_process(bin_test,fpath)
     regxs = r'^Starting\sfrom\spoint\:\s\w\=(\d)\,\w\=(\d)'
     start_point = find_match(regxs, output)
     print ('Actual result = {}\n'
@@ -110,12 +110,12 @@ def setup_test_004():
     yield fpath
     os.remove(fpath) 
 
-def test_004_stop_point(setup_test_004):
+def test_004_stop_point(bin_path,setup_test_004):
+    bin_test = bin_path
     fpath = setup_test_004
-    points = open(fpath, "r")
-    points = points.read()
+    points = read_file(fpath)
     print('Testing points: {}'.format(points))
-    output = call_process(fpath)    
+    output = call_process(bin_test,fpath)    
     regxs = r'Stopping\sat\spoint\:\s\w\=(\d\d)\,\w\=(\d\d)'
     stop_point = find_match(regxs, output)
     print ('Actual result = {}\n'
@@ -129,12 +129,12 @@ def setup_test_005():
     yield fpath
     os.remove(fpath) 
 
-def test_005_load_time(setup_test_005):
+def test_005_load_time(bin_path,setup_test_005):
+    bin_test = bin_path
     fpath = setup_test_005
-    points = open(fpath, "r")
-    points = points.read()
+    points = read_file(fpath)
     print('Testing points: {}'.format(points))
-    output = call_process(fpath)
+    output = call_process(bin_test,fpath)
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs,output))
     print ('Actual result = {}\n'
@@ -149,12 +149,12 @@ def setup_test_006():
     os.remove(fpath) 
 
 
-def test_006_load_time(setup_test_006):
+def test_006_load_time(bin_path,setup_test_006):
+    bin_test = bin_path
     fpath = setup_test_006
-    points = open(fpath, "r")
-    points = points.read()
+    points = read_file(fpath)
     print('Testing points: {}'.format(points))
-    output = call_process(fpath)
+    output = call_process(bin_test,fpath)
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs,output))
     print ('Actual result = {}\n'
@@ -169,12 +169,12 @@ def setup_test_007():
     os.remove(fpath) 
 
 
-def test_007_load_time(setup_test_007):
+def test_007_load_time(bin_path,setup_test_007):
+    bin_test = bin_path
     fpath = setup_test_007
-    points = open(fpath, "r")
-    points = points.read()
+    points = read_file(fpath)
     print('Testing points: {}'.format(points))
-    output = call_process(fpath)
+    output = call_process(bin_test,fpath)
     regxs = r'^Minimum\stime\s\=\s(\d\d\.\d\d)'
     min_time = float(find_match(regxs,output))
     print ('Actual result = {}\n'
@@ -187,12 +187,13 @@ def setup_test_008():
     yield fpath
     os.remove(fpath)
 
-def test_008_load_time(setup_test_008):
+def test_008_load_time(bin_path,setup_test_008):
+    bin_test = bin_path
     fpath = setup_test_008
     points = read_file(fpath)
     regex = r'^Minimum time = (\d+\.\d\d)'
     print('Testing points: {}'.format(points))
-    out = call_process(fpath)
+    out = call_process(bin_test,fpath)
     match = find_match(regex,out)
     min_time = float (match)
     print ('Actual result = {}\n''Expected result <={}'.format(min_time, 30.00))
@@ -206,7 +207,8 @@ def setup_test_009(request):
     yield [params, fpath ]
     os.remove(fpath)
 
-def test_009_load_time_format(setup_test_009):
+def test_009_load_time_format(bin_path,setup_test_009):
+    bin_test = bin_path
     setup = setup_test_009
     fpath = setup[1]
     params = setup[0]
@@ -218,7 +220,7 @@ def test_009_load_time_format(setup_test_009):
     elif points == ((12,10,10),): 
         min_time = params[points]
 
-    out = call_process(fpath)
+    out = call_process(bin_test,fpath)
     min_time_string = find_match(regex,out)
 
     print ('Actual pointsresult = {}\n''Expected result = {}'.format(min_time_string, 'Minimum time = '+ min_time))
@@ -232,10 +234,12 @@ def setup_test_010():
     yield fpath
     os.remove(fpath)
 
-def test_010_load_time_fromat(setup_test_010):
+def test_010_load_time_fromat(bin_path,setup_test_010):
+    bin_test = bin_path
     fpath = setup_test_010
+    points = read_file(fpath)
     regex = r'^Starting from point: x=\d,y=\d'
-    out = call_process(fpath)
+    out = call_process(bin_test,fpath)
     min_time_format = find_match(regex,out)
     print ('Actual result = {}\n''Expected result = {}'.format(min_time_format, 'Minimum time = 21.00'))
     assert min_time_format == 'Starting from point: x=0,y=0' , 'Minimum time should look like [Starting from point: x=0,y=0] for point: {}'.format(points)
@@ -247,10 +251,12 @@ def setup_test_011():
     yield fpath
     os.remove(fpath)
 
-def test_011_load_time_format(setup_test_011):
+def test_011_load_time_format(bin_path,setup_test_011):
+    bin_test = bin_path
     fpath = setup_test_011
+    points = read_file(fpath)
     regex = r'^Stopping at point: x=\d\d,y=\d\d'
-    out = call_process(fpath)
+    out = call_process(bin_test,fpath)
     min_time_format = find_match(regex,out)
     print ('Actual result = {}\n''Expected result = {}'.format(min_time_format, 'Minimum time = 21.00'))
     assert min_time_format == 'Stopping at point: x=20,y=20' , 'Minimum time should look like [Stopping at point: x=20,y=20] for point: {}'.format(points)
@@ -262,18 +268,20 @@ def setup_test_012(request):
     yield fpath
     os.remove(fpath)
 
-def test_012_invalid_points(setup_test_012):
+def test_012_invalid_points(bin_path,setup_test_012):
+    bin_test = bin_path
     fpath = setup_test_012
     points = read_file(fpath)
     regex = r'^Minimum time = (\d+\.\d\d)'
     print('Testing points: {}'.format(points))
-    out = call_process(fpath)
+    out = call_process(bin_test,fpath)
     match = find_match(regex,out)
     min_time = float (match)
     print ('Actual result = {}\n''Expected result ={}'.format(min_time, 20.00))
     assert min_time == 20.00, 'Minimum time should be 20 for point: {}'.format(points)
 
-def test_013_process_with_no_file():
+def test_013_process_with_no_file(bin_path):
+    bin_test = bin_path
     print('Testing the process without input file')
-    return_code = subprocess.call(['../bins/parcel_loader_v1' ], stderr=subprocess.STDOUT)
+    return_code = subprocess.call([''+bin_test], stderr=subprocess.STDOUT)
     assert  return_code != 0
