@@ -1,6 +1,11 @@
+results/
 assets/
 tests/assets/
 tests/__pycache__/
 tests/.pytest_cache/
 tests/pytest-html
 *.html
+# Ignore everything in this directory
+#*
+# Except this file
+#!.gitignore

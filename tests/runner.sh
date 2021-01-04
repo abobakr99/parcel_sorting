@@ -17,11 +17,10 @@ done
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 if [[ ! -d "../results" ]]
 then 
-  echo "does not exist "
+  echo "creating results and timestamp folders"
   mkdir ../results
   mkdir ../results/$timestamp
 else 
-  echo "====exists==== "
   mkdir ../results/$timestamp
 fi
 #run the tests 
