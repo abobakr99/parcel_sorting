@@ -159,7 +159,7 @@ def test_006_load_time(bin_path,setup_test_006):
     min_time = float(find_match(regxs,output))
     print ('Actual result = {}\n'
            'Expected result = {}'.format(min_time, 60.00))
-    assert min_time == 60.00, 'Minimum time should be 41 for point: {}'.format(points)
+    assert min_time == 60.00, 'Minimum time should be 60 for point: {}'.format(points)
     
 @pytest.fixture
 def setup_test_007():
