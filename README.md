@@ -8,11 +8,11 @@ Clone the repository to your machine
 
 SSH
 ```
-git clone git@github.com:AliBaWazir/parcel_sorting.git
+git@github.com:abobakr99/parcel_sorting.git
 ```
 HTTPS
 ```
-git clone https://github.com/AliBaWazir/parcel_sorting.git
+git clone https://github.com/abobakr99/parcel_sorting.git
 ``` 
 ## Plugins
 
